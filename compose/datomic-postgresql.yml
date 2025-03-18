@@ -6,6 +6,8 @@ services:
       POSTGRES_DB: my-datomic-storage
       POSTGRES_USER: datomic-user
       POSTGRES_PASSWORD: unsafe
+    ports:
+      - 5432
 
   datomic-transactor:
     build: ./docker/transactor
@@ -13,10 +15,13 @@ services:
       BOOT_CONFIG_EDN: /usr/config/postgresql/config.edn
     volumes:
       - ./config:/usr/config
+    ports:
+      - 4334
 
   datomic-peer-server:
     build: ./docker/peer-server
     environment:
+      PORT: 8998
 
       DATOMIC_ACCESS_KEY: unsafe-key
       DATOMIC_SECRET: unsafe-secret
@@ -29,13 +34,15 @@ services:
 
       # DATOMIC_DATABASE_3: my-datomic-database-magenta
       # DATOMIC_STORAGE_URI_3: datomic:sql://my-datomic-database-magenta?jdbc:postgresql://datomic-storage:5432/my-datomic-storage?user=datomic-user&password=unsafe
-
+    ports:
+      - 8998
 
   datomic-console:
     build: ./docker/console
     environment:
       DB_URI: datomic:sql://?jdbc:postgresql://datomic-storage:5432/my-datomic-storage?user=datomic-user&password=unsafe
-
+    ports:
+      - 8080
 
   datomic-flare:
     build: ./docker/flare
@@ -51,7 +58,8 @@ services:
       # FLARE_CLIENT_SECRET: unsafe-secret
       # FLARE_CLIENT_ACCESS_KEY: unsafe-key
       # FLARE_CLIENT_DATABASE_NAME: my-datomic-database
-
+    ports:
+      - 3042
 
   datomic-tools:
     build: ./docker/tools
