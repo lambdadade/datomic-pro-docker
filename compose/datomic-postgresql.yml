@@ -17,7 +17,6 @@ services:
   datomic-peer-server:
     build: ./docker/peer-server
     environment:
-      PORT: 8998
 
       DATOMIC_ACCESS_KEY: unsafe-key
       DATOMIC_SECRET: unsafe-secret
@@ -36,8 +35,7 @@ services:
     build: ./docker/console
     environment:
       DB_URI: datomic:sql://?jdbc:postgresql://datomic-storage:5432/my-datomic-storage?user=datomic-user&password=unsafe
-    ports:
-      - '8080:8080'
+
 
   datomic-flare:
     build: ./docker/flare
