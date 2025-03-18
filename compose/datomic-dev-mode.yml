@@ -18,7 +18,7 @@ services:
       DATOMIC_DATABASE: my-datomic-database
       DATOMIC_STORAGE_URI: datomic:dev://datomic-transactor:4334/my-datomic-database/?password=unsafe
     ports:
-      - 8998:8998
+      - 8999:8998
 
   datomic-console:
     build: ./docker/console
